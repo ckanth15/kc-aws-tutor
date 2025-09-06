@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "=== BUILDSPEC VERSION 2.0 - JAVA DOCKER ==="
+      - echo "=== Logging in to Amazon ECR ==="
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo "=== Build started on `date` ==="
+      - echo "=== Working directory: `pwd` ==="
+      - echo "=== Contents: `ls -la` ==="
+  
+  build:
+    commands:
+      - echo "=== Building Docker image ==="
+      - docker build -t kc-cloud-tutor .
+      - echo "=== Tagging image for ECR ==="
+      - docker tag kc-cloud-tutor:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/kc-cloud-tutor:latest
+      - echo "=== Pushing image to ECR ==="
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/kc-cloud-tutor:latest
+      - echo "=== Build completed on `date` ==="
+  
+  post_build:
+    commands:
+      - echo "=== Build phase completed ==="
+      - echo "=== Image URI: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/kc-cloud-tutor:latest ==="
+
+artifacts:
+  files:
+    - '**/*'
+  name: kc-cloud-tutor-$(date +%Y-%m-%d)
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
+    - '/var/cache/apt/**/*'

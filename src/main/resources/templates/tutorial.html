@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${tutorial.title}">Tutorial</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">KC</span>
+                <span class="logo-text">Cloud Tutor</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">→</span>
+                <a th:href="@{'/category/' + ${tutorial.category}}" class="breadcrumb-link" th:text="${tutorial.category.toUpperCase()}"></a>
+                <span class="breadcrumb-separator">→</span>
+                <span class="breadcrumb-current" th:text="${tutorial.title}"></span>
+            </div>
+
+            <article class="tutorial-content">
+                <header class="tutorial-header">
+                    <h1 class="tutorial-title" th:text="${tutorial.title}"></h1>
+                    <p class="tutorial-description" th:text="${tutorial.description}"></p>
+                    <div class="tutorial-meta">
+                        <span class="tutorial-category" th:text="${tutorial.category}"></span>
+                        <span class="tutorial-difficulty" th:text="${tutorial.difficulty}"></span>
+                        <span class="tutorial-duration" th:text="${tutorial.duration}"></span>
+                        <span class="tutorial-author" th:text="${tutorial.author}"></span>
+                    </div>
+                </header>
+
+                <div class="tutorial-body" th:utext="${tutorial.content}">
+                    <!-- Markdown content will be rendered here as HTML -->
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-tags">
+                        <span th:each="tag : ${tutorial.tags}" class="tag" th:text="${tag}"></span>
+                    </div>
+                </footer>
+            </article>
+
+            <aside class="related-tutorials" th:if="${!relatedTutorials.empty}">
+                <h3 class="related-title">Related Tutorials</h3>
+                <div class="related-list">
+                    <a th:each="related : ${relatedTutorials}" 
+                       th:href="@{'/tutorial/' + ${related.slug}}" 
+                       class="related-item"
+                       th:text="${related.title}">
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 KC Cloud Tutor. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

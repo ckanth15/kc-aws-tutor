@@ -1,0 +1,47 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: kc-cloud-tutor
+  profiles:
+    active: production
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/
+
+# Cost optimization settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      cloudwatch:
+        namespace: KCCloudTutor
+        enabled: false  # Disable CloudWatch metrics to save costs
+
+# Logging configuration for cost monitoring
+logging:
+  level:
+    com.kccloudtutor: INFO
+    org.springframework: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Application info for cost tracking
+info:
+  app:
+    name: KC Cloud Tutor
+    description: Cloud Computing Tutorial Platform
+    version: 1.0.0
+    cost-optimization: "AWS Free Tier Compatible"

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${currentCategory.toUpperCase() + ' Tutorials'}">Category Tutorials</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">KC</span>
+                <span class="logo-text">Cloud Tutor</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">→</span>
+                <span class="breadcrumb-current" th:text="${currentCategory.toUpperCase()}"></span>
+            </div>
+
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h2 class="sidebar-title">Cloud Platforms</h2>
+                    <nav class="category-nav">
+                        <a th:each="category : ${categories}" 
+                           th:href="@{'/category/' + ${category}}" 
+                           th:class="${category == currentCategory ? 'category-link active' : 'category-link'}"
+                           th:text="${category.toUpperCase()}">
+                        </a>
+                    </nav>
+                </aside>
+
+                <section class="content">
+                    <h1 class="content-title" th:text="${currentCategory.toUpperCase() + ' Tutorials'}"></h1>
+                    <p class="content-description">Master <span th:text="${currentCategory}"></span> with practical tutorials and hands-on labs</p>
+                    
+                    <div class="tutorial-list">
+                        <article th:each="tutorial : ${tutorials}" class="tutorial-item">
+                            <h3 class="tutorial-title">
+                                <a th:href="@{'/tutorial/' + ${tutorial.slug}}" th:text="${tutorial.title}"></a>
+                            </h3>
+                            <p class="tutorial-description" th:text="${tutorial.description}"></p>
+                            <div class="tutorial-meta">
+                                <span class="tutorial-difficulty" th:text="${tutorial.difficulty}"></span>
+                                <span class="tutorial-duration" th:text="${tutorial.duration}"></span>
+                                <span class="tutorial-author" th:text="${tutorial.author}"></span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 KC Cloud Tutor. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
