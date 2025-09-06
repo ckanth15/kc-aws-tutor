@@ -4,8 +4,16 @@ phases:
   pre_build:
     commands:
       - echo "=== BUILDSPEC VERSION 2.0 - JAVA DOCKER ==="
+      - echo "=== AWS CLI Version ==="
+      - aws --version
+      - echo "=== AWS Account ID ==="
+      - echo $AWS_ACCOUNT_ID
+      - echo "=== AWS Region ==="
+      - echo $AWS_DEFAULT_REGION
+      - echo "=== Creating ECR repository if it doesn't exist ==="
+      - aws ecr describe-repositories --repository-names kc-cloud-tutor --region $AWS_DEFAULT_REGION || aws ecr create-repository --repository-name kc-cloud-tutor --region $AWS_DEFAULT_REGION
       - echo "=== Logging in to Amazon ECR ==="
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo "=== Build started ==="
   
   build:
