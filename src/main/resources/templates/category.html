@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${currentCategory.toUpperCase() + ' Tutorials'}">Category Tutorials</title>
+    <title th:text="${selectedCategory.toUpperCase() + ' - KC Cloud Tutor'}">Category Tutorials</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -23,42 +23,34 @@
 
     <main class="main">
         <div class="container">
-            <div class="breadcrumb">
-                <a href="/" class="breadcrumb-link">Home</a>
-                <span class="breadcrumb-separator">→</span>
-                <span class="breadcrumb-current" th:text="${currentCategory.toUpperCase()}"></span>
-            </div>
-
             <div class="content-grid">
-                <aside class="sidebar">
-                    <h2 class="sidebar-title">Cloud Platforms</h2>
+                <div class="sidebar">
+                    <h3 class="sidebar-title">Categories</h3>
                     <nav class="category-nav">
-                        <a th:each="category : ${categories}" 
-                           th:href="@{'/category/' + ${category}}" 
-                           th:class="${category == currentCategory ? 'category-link active' : 'category-link'}"
-                           th:text="${category.toUpperCase()}">
-                        </a>
+                        <a href="/category/aws" class="category-link" th:classappend="${selectedCategory == 'aws'} ? 'active' : ''">AWS</a>
+                        <a href="/category/azure" class="category-link" th:classappend="${selectedCategory == 'azure'} ? 'active' : ''">Azure</a>
+                        <a href="/category/gcp" class="category-link" th:classappend="${selectedCategory == 'gcp'} ? 'active' : ''">GCP</a>
                     </nav>
-                </aside>
+                </div>
 
-                <section class="content">
-                    <h1 class="content-title" th:text="${currentCategory.toUpperCase() + ' Tutorials'}"></h1>
-                    <p class="content-description">Master <span th:text="${currentCategory}"></span> with practical tutorials and hands-on labs</p>
+                <div class="content">
+                    <h1 class="content-title" th:text="${selectedCategory.toUpperCase()}">Category Name</h1>
+                    <p class="content-description">Tutorials for <span th:text="${selectedCategory}"></span> platform</p>
                     
                     <div class="tutorial-list">
-                        <article th:each="tutorial : ${tutorials}" class="tutorial-item">
+                        <div class="tutorial-item">
                             <h3 class="tutorial-title">
-                                <a th:href="@{'/tutorial/' + ${tutorial.slug}}" th:text="${tutorial.title}"></a>
+                                <a th:href="@{'/category/' + ${selectedCategory} + '/aws-fundamentals'}" th:text="${selectedCategory + ' Fundamentals'}">Tutorial Title</a>
                             </h3>
-                            <p class="tutorial-description" th:text="${tutorial.description}"></p>
+                            <p class="tutorial-description">Learn the core concepts of <span th:text="${selectedCategory}"></span></p>
                             <div class="tutorial-meta">
-                                <span class="tutorial-difficulty" th:text="${tutorial.difficulty}"></span>
-                                <span class="tutorial-duration" th:text="${tutorial.duration}"></span>
-                                <span class="tutorial-author" th:text="${tutorial.author}"></span>
+                                <span class="tutorial-category" th:text="${selectedCategory}"></span>
+                                <span class="tutorial-difficulty">beginner</span>
+                                <span class="tutorial-duration">45 min</span>
                             </div>
-                        </article>
+                        </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </main>

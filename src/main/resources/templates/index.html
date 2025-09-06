@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KC Cloud Tutor - Learn Cloud Computing</title>
+    <title>KC Cloud Tutor</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -24,38 +24,63 @@
     <main class="main">
         <div class="container">
             <div class="hero">
-                <h1 class="hero-title">Master Cloud Computing</h1>
-                <p class="hero-subtitle">Learn AWS, Azure, and GCP through practical tutorials and hands-on labs</p>
-                <p class="hero-description">From beginner to advanced certification prep</p>
+                <h1 class="hero-title">Welcome to KC Cloud Tutor</h1>
+                <p class="hero-subtitle">Learn AWS, Azure, and GCP through practical tutorials</p>
+                <p class="hero-description">Start your cloud computing journey today</p>
             </div>
 
             <div class="content-grid">
-                <aside class="sidebar">
-                    <h2 class="sidebar-title">Cloud Platforms</h2>
+                <div class="sidebar">
+                    <h3 class="sidebar-title">Categories</h3>
                     <nav class="category-nav">
-                        <a th:each="category : ${categories}" 
-                           th:href="@{'/category/' + ${category}}" 
-                           class="category-link"
-                           th:text="${category.toUpperCase()}">
-                        </a>
+                        <a href="/category/aws" class="category-link">AWS</a>
+                        <a href="/category/azure" class="category-link">Azure</a>
+                        <a href="/category/gcp" class="category-link">GCP</a>
                     </nav>
-                </aside>
+                </div>
 
-                <section class="content">
-                    <h2 class="content-title">Featured Tutorials</h2>
+                <div class="content">
+                    <h2 class="content-title">Getting Started</h2>
+                    <p class="content-description">Choose a cloud platform from the sidebar to begin learning.</p>
+                    
                     <div class="tutorial-list">
-                        <article th:each="tutorial : ${featuredTutorials}" class="tutorial-item">
+                        <div class="tutorial-item">
                             <h3 class="tutorial-title">
-                                <a th:href="@{'/tutorial/' + ${tutorial.slug}}" th:text="${tutorial.title}"></a>
+                                <a href="/category/aws/aws-fundamentals">AWS Fundamentals</a>
                             </h3>
-                            <p class="tutorial-description" th:text="${tutorial.description}"></p>
+                            <p class="tutorial-description">Learn the core concepts of Amazon Web Services</p>
                             <div class="tutorial-meta">
-                                <span class="tutorial-category" th:text="${tutorial.category}"></span>
-                                <span class="tutorial-duration" th:text="${tutorial.duration}"></span>
+                                <span class="tutorial-category">aws</span>
+                                <span class="tutorial-difficulty">beginner</span>
+                                <span class="tutorial-duration">45 min</span>
                             </div>
-                        </article>
+                        </div>
+
+                        <div class="tutorial-item">
+                            <h3 class="tutorial-title">
+                                <a href="/category/azure/azure-intro">Azure Introduction</a>
+                            </h3>
+                            <p class="tutorial-description">Get started with Microsoft Azure</p>
+                            <div class="tutorial-meta">
+                                <span class="tutorial-category">azure</span>
+                                <span class="tutorial-difficulty">beginner</span>
+                                <span class="tutorial-duration">30 min</span>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-item">
+                            <h3 class="tutorial-title">
+                                <a href="/category/gcp/gcp-essentials">GCP Essentials</a>
+                            </h3>
+                            <p class="tutorial-description">Explore Google Cloud Platform</p>
+                            <div class="tutorial-meta">
+                                <span class="tutorial-category">gcp</span>
+                                <span class="tutorial-difficulty">beginner</span>
+                                <span class="tutorial-duration">40 min</span>
+                            </div>
+                        </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </main>
