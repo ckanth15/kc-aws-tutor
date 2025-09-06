@@ -21,7 +21,7 @@ phases:
   post_build:
     commands:
       - echo "=== Build phase completed ==="
-      - echo "=== Image URI: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/kc-cloud-tutor:latest ==="
+      - echo "=== Image pushed to ECR ==="
 
 artifacts:
   files:
